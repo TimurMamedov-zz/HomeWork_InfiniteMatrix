@@ -9,31 +9,28 @@ template<typename T, T defaultValue>
 class Column
 {
 public:
-
-    void eraseData()
+    const T& getLastElement()
     {
-        if(!map.empty() && map.find(index_) != map.end())
-        {
-            if(map[index_] == defaultValue)
-            {
-                map.erase(index_);
-            }
-        }
+        if(map.find(index_) != map.end())
+            return map[index_];
+        return defaultValue_;
     }
 
-    void savePreviousData()
+    void eraseLastElement()
     {
-        if(defaultValue_ != defaultValue)
-        {
-            map.emplace(index_, defaultValue_);
-            defaultValue_ = defaultValue;
-        }
+        if(map.find(index_) != map.end())
+            map.erase(index_);
+    }
+
+    void update()
+    {
+        eraseData();
+        savePreviousData();
     }
 
     T& operator[](const std::uintmax_t& index)
     {
-        eraseData();
-        savePreviousData();
+        update();
 
         index_ = index;
         auto it = map.find(index);
@@ -42,31 +39,6 @@ public:
             return defaultValue_;
         }
         return map[index];
-    }
-
-    typename std::map<std::uintmax_t, T>::iterator
-    begin()
-    {
-        return map.begin();
-    }
-
-    typename std::map<std::uintmax_t, T>::iterator
-    end()
-    {
-        return map.end();
-    }
-
-    Column& operator =(const Column& rightCol_)
-    {
-        if(map == rightCol_.getMap())
-            return *this;
-        map = rightCol_.getMap();
-        return *this;
-    }
-
-    const std::map<std::uintmax_t, T>& getMap()
-    {
-        return map;
     }
 
     std::uintmax_t size()
@@ -81,4 +53,24 @@ private:
     std::map<std::uintmax_t, T> map;
     T defaultValue_ = defaultValue;
     std::uintmax_t index_ = 0;
+
+    void savePreviousData()
+    {
+        if(defaultValue_ != defaultValue)
+        {
+            map.emplace(index_, defaultValue_);
+            defaultValue_ = defaultValue;
+        }
+    }
+
+    void eraseData()
+    {
+        if((!map.empty()) && (map.find(index_) != map.end()))
+        {
+            if(map[index_] == defaultValue)
+            {
+                map.erase(index_);
+            }
+        }
+    }
 };

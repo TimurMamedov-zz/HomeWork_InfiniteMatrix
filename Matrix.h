@@ -15,14 +15,30 @@ public:
     T getDefaultValue(){ return defaultValue; }
     using row = std::uintmax_t;
     using column = Column<T, defaultValue>;
+
     std::uintmax_t size()
     {
+        update();
+        std::uintmax_t size_ = 0;
 
+        for(auto& elem : map)
+        {
+            size_ += elem.second.size();
+        }
+
+        return size_;
+    }
+
+    void update()
+    {
+        col_.update();
+        savePreviousData();
+        eraseData();
     }
 
     column& operator[](row index)
     {
-        savePreviousValue();
+        update();
 
         auto col = map.find(index);
         if(col == map.end())
@@ -39,18 +55,25 @@ private:
     column col_;
     row index_;
 
-    void savePreviousValue()
+    void savePreviousData()
     {
-        col_.eraseData();
-        col_.savePreviousData();
-        for(auto it = col_.begin(); it != col_.end(); ++it)
+        if(col_.size())
         {
-            if(it->second != defaultValue)
+            if(col_.getLastElement() != defaultValue)
             {
                 map.emplace(index_, col_);
-                col_[it->first] = defaultValue;
-                col_.eraseData();
-                break;
+                col_.eraseLastElement();
+            }
+        }
+    }
+
+    void eraseData()
+    {
+        if(map.find(index_) != map.end())
+        {
+            if(!map[index_].size())
+            {
+                map.erase(index_);
             }
         }
     }

@@ -3,6 +3,9 @@ cmake_minimum_required(VERSION 3.2)
 #project(InfiniteMatrix VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 project(InfiniteMatrix)
 
+SET (BOOST_ROOT "C:/boost/build-boost")
+#SET (BOOST_INCLUDEDIR "C:/boost/include")
+#SET (BOOST_LIBRARYDIR "C:/boost/lib")
 #find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 configure_file(version.h.in version.h)
