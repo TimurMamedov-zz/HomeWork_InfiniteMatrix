@@ -73,13 +73,13 @@ public:
     Matrix() = default;
 
     T getDefaultValue(){ return defaultValue; }
-    using row = std::uintmax_t;
+    using row = size_type;
     using column = Column<T, defaultValue>;
 
-    std::uintmax_t size()
+    size_type size()
     {
         update();
-        std::uintmax_t size_ = 0;
+        size_type size_ = 0;
 
         for(auto& elem : map)
         {

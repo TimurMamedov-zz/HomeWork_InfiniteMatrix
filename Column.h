@@ -4,6 +4,9 @@
 */
 #pragma once
 #include <map>
+//#include <gmpxx.h>
+//using size_type = mpz_class;
+using size_type = std::uintmax_t;
 
 template<typename T, T defaultValue>
 class Column
@@ -14,7 +17,7 @@ public:
         public:
             iterator() = default;
 
-            iterator(const typename std::map<std::uintmax_t, T>::iterator& it)
+            iterator(const typename std::map<size_type, T>::iterator& it)
             {
                 map_it = it;
             }
@@ -56,7 +59,7 @@ public:
                 map_it--;
                 return tmp;
             }
-            typename std::map<std::uintmax_t, T>::iterator map_it;
+            typename std::map<size_type, T>::iterator map_it;
         };
 
     const T& getLastElement()
@@ -88,7 +91,7 @@ public:
         savePreviousData();
     }
 
-    T& operator[](const std::uintmax_t& index)
+    T& operator[](const size_type& index)
     {
         update();
 
@@ -101,7 +104,7 @@ public:
         return map[index];
     }
 
-    std::uintmax_t size()
+    size_type size()
     {
         eraseData();
         savePreviousData();
@@ -110,9 +113,9 @@ public:
     }
 
 private:
-    std::map<std::uintmax_t, T> map;
+    std::map<size_type, T> map;
     T defaultValue_ = defaultValue;
-    std::uintmax_t index_ = 0;
+    size_type index_ = 0;
 
     void savePreviousData()
     {

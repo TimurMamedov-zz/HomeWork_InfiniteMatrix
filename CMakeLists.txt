@@ -23,6 +23,11 @@ set_target_properties (InfiniteMatrix PROPERTIES
         COMPILE_OPTIONS -Wpedantic -Wall -Wextra
 )
 
+#target_link_libraries(InfiniteMatrix
+#        gmp
+#        gmpxx
+#)
+
 #set_target_properties (InfiniteMatrix ${TEST} PROPERTIES
 #        CXX_STANDARD 14
 #        CXX_STANDARD_REQUIRED ON
