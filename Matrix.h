@@ -10,6 +10,66 @@ template<typename T, T defaultValue>
 class Matrix
 {
 public:
+//    class iterator
+//    {
+//    public:
+//        iterator()
+//        {
+
+//        }
+
+//        iterator(const iterator& it)
+//        {
+
+//        }
+
+//        ~iterator() = default;
+
+//        bool operator==(const iterator& it) const
+//        {
+//            return map_it == it.map_it;
+//        }
+//        bool operator!=(const iterator& it) const
+//        {
+//            return map_it != it.map_it;
+//        }
+
+//        iterator& operator++() noexcept
+//        {
+//            if()
+//                pNode = pNode->next;
+//            return *this;
+//        }
+
+//        iterator operator++(int) noexcept
+//        {
+//            auto tmp = *this;
+//            return tmp;
+//        }
+
+//        iterator& operator--() noexcept
+//        {
+//            return *this;
+//        }
+
+//        iterator operator--(int) noexcept
+//        {
+//            auto tmp = *this;
+//            return tmp;
+//        }
+
+        //            reference operator*() const noexcept
+        //            {
+        //                return pNode->data;
+        //            }
+        //            pointer operator->() const noexcept
+        //            {
+        //                return &pNode->data;
+        //            }
+//        std::map<row, column>::iterator map_it;
+//        column::iterator col_it;
+//    };
+
     Matrix() = default;
 
     T getDefaultValue(){ return defaultValue; }

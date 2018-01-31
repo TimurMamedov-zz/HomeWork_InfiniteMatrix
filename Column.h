@@ -9,11 +9,71 @@ template<typename T, T defaultValue>
 class Column
 {
 public:
+    class iterator
+        {
+        public:
+            iterator() = default;
+
+            iterator(const typename std::map<std::uintmax_t, T>::iterator& it)
+            {
+                map_it = it;
+            }
+
+            iterator(const iterator& it) = default;
+            ~iterator() = default;
+
+            bool operator==(const iterator& it) const
+            {
+                return map_it == it.map_it;
+            }
+            bool operator!=(const iterator& it) const
+            {
+                return map_it != it.map_it;
+            }
+
+            iterator& operator++() noexcept
+            {
+                map_it++;
+                return *this;
+            }
+
+            iterator operator++(int) noexcept
+            {
+                auto tmp = *this;
+                map_it++;
+                return tmp;
+            }
+
+            iterator& operator--() noexcept
+            {
+                map_it--;
+                return *this;
+            }
+
+            iterator operator--(int) noexcept
+            {
+                auto tmp = *this;
+                map_it--;
+                return tmp;
+            }
+            typename std::map<std::uintmax_t, T>::iterator map_it;
+        };
+
     const T& getLastElement()
     {
         if(map.find(index_) != map.end())
             return map[index_];
         return defaultValue_;
+    }
+
+    iterator begin()
+    {
+        return iterator(map.begin());
+    }
+
+    iterator end()
+    {
+        return iterator(map.end());
     }
 
     void eraseLastElement()
