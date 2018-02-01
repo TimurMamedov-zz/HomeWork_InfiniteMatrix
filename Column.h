@@ -12,55 +12,7 @@ template<typename T, T defaultValue>
 class Column
 {
 public:
-    class iterator
-        {
-        public:
-            iterator() = default;
-
-            iterator(const typename std::map<size_type, T>::iterator& it)
-            {
-                map_it = it;
-            }
-
-            iterator(const iterator& it) = default;
-            ~iterator() = default;
-
-            bool operator==(const iterator& it) const
-            {
-                return map_it == it.map_it;
-            }
-            bool operator!=(const iterator& it) const
-            {
-                return map_it != it.map_it;
-            }
-
-            iterator& operator++() noexcept
-            {
-                map_it++;
-                return *this;
-            }
-
-            iterator operator++(int) noexcept
-            {
-                auto tmp = *this;
-                map_it++;
-                return tmp;
-            }
-
-            iterator& operator--() noexcept
-            {
-                map_it--;
-                return *this;
-            }
-
-            iterator operator--(int) noexcept
-            {
-                auto tmp = *this;
-                map_it--;
-                return tmp;
-            }
-            typename std::map<size_type, T>::iterator map_it;
-        };
+    using column_iterator = typename std::map<size_type, T>::iterator;
 
     const T& getLastElement()
     {
@@ -69,14 +21,14 @@ public:
         return defaultValue_;
     }
 
-    iterator begin()
+    column_iterator begin()
     {
-        return iterator(map.begin());
+        return map.begin();
     }
 
-    iterator end()
+    column_iterator end()
     {
-        return iterator(map.end());
+        return map.end();
     }
 
     void eraseLastElement()

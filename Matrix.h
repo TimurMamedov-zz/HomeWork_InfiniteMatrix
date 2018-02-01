@@ -4,77 +4,122 @@
 */
 #pragma once
 #include <memory>
+#include <tuple>
 #include "Column.h"
 
 template<typename T, T defaultValue>
 class Matrix
 {
 public:
-//    class iterator
-//    {
-//    public:
-//        iterator()
-//        {
+    using row = size_type;
+    using column = Column<T, defaultValue>;
+    using return_type = std::tuple<size_type, size_type, T>;
+    class iterator
+    {
+    public:
+        using map_iterator = typename std::map<row, column>::iterator;
+        iterator(map_iterator it)
+        {
+            map_it = it;
+            col_it = map_it->second.begin();
+        }
 
+        iterator(const iterator& it)
+        {
+            map_it = it.map_it;
+        }
+
+        ~iterator() = default;
+
+        bool operator==(const iterator& it) const
+        {
+            return map_it == it.map_it;
+        }
+        bool operator!=(const iterator& it) const
+        {
+            return map_it != it.map_it;
+        }
+
+        iterator& operator++() noexcept
+        {
+            if(col_it != map_it->second.end())
+                col_it++;
+
+            if(col_it == map_it->second.end())
+            {
+                map_it++;
+                col_it = map_it->second.begin();
+            }
+            return *this;
+        }
+
+        iterator operator++(int) noexcept
+        {
+            auto tmp = *this;
+            if(col_it != map_it->second.end())
+                col_it++;
+
+            if(col_it == map_it->second.end())
+            {
+                map_it++;
+                col_it = map_it->second.begin();
+            }
+            return tmp;
+        }
+
+        iterator& operator--() noexcept
+        {
+            if(col_it != map_it->second.rbegin())
+                col_it--;
+
+            if(col_it == map_it->second.rbegin())
+            {
+                map_it--;
+                col_it = map_it->second.rend();
+            }
+            return *this;
+        }
+
+        iterator operator--(int) noexcept
+        {
+            auto tmp = *this;
+            if(col_it != map_it->second.rbegin())
+                col_it--;
+
+            if(col_it == map_it->second.rbegin())
+            {
+                map_it--;
+                col_it = map_it->second.rend();
+            }
+            return tmp;
+        }
+
+        return_type operator*() const noexcept
+        {
+            return return_type(map_it->first, col_it->first, col_it->second);
+        }
+//        pointer operator->() const noexcept
+//        {
+//            return &pNode->data;
 //        }
 
-//        iterator(const iterator& it)
-//        {
+        map_iterator map_it;
+        typename column::column_iterator col_it;
+    };
 
-//        }
+    iterator begin()
+    {
+        return iterator(map.begin());
+    }
 
-//        ~iterator() = default;
-
-//        bool operator==(const iterator& it) const
-//        {
-//            return map_it == it.map_it;
-//        }
-//        bool operator!=(const iterator& it) const
-//        {
-//            return map_it != it.map_it;
-//        }
-
-//        iterator& operator++() noexcept
-//        {
-//            if()
-//                pNode = pNode->next;
-//            return *this;
-//        }
-
-//        iterator operator++(int) noexcept
-//        {
-//            auto tmp = *this;
-//            return tmp;
-//        }
-
-//        iterator& operator--() noexcept
-//        {
-//            return *this;
-//        }
-
-//        iterator operator--(int) noexcept
-//        {
-//            auto tmp = *this;
-//            return tmp;
-//        }
-
-        //            reference operator*() const noexcept
-        //            {
-        //                return pNode->data;
-        //            }
-        //            pointer operator->() const noexcept
-        //            {
-        //                return &pNode->data;
-        //            }
-//        std::map<row, column>::iterator map_it;
-//        column::iterator col_it;
-//    };
+    iterator end()
+    {
+        return iterator(map.end());
+    }
 
     Matrix() = default;
 
     T getDefaultValue(){ return defaultValue; }
-    using row = size_type;
-    using column = Column<T, defaultValue>;
 
     size_type size()
     {
@@ -85,6 +130,8 @@ public:
         {
             size_ += elem.second.size();
         }
+        if(next)
+            size_ += next->size();
 
         return size_;
     }
@@ -121,7 +168,16 @@ private:
         {
             if(col_.getLastElement() != defaultValue)
             {
-                map.emplace(index_, col_);
+                if(map.size() != map.max_size())
+                    map.emplace(index_, col_);
+//                else
+//                {
+//                    if(!next)
+//                    {
+//                        next = std::make_unique<Matrix<T, defaultValue>>();
+//                    }
+//                    next->
+//                }
                 col_.eraseLastElement();
             }
         }
