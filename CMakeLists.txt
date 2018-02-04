@@ -10,7 +10,7 @@ SET (BOOST_ROOT "C:/boost/build-boost")
 
 configure_file(version.h.in version.h)
 
-set(HEADERS Matrix.h Column.h)
+set(HEADERS Matrix.h Column.h Intermediary.h Last.h)
 
 add_executable(InfiniteMatrix ${HEADERS} main.cpp)
 
