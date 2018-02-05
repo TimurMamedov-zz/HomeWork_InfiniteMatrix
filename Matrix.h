@@ -8,7 +8,7 @@
 #include "Last.h"
 
 template<typename T, T defaultValue>
-class Matrix : public Last<T, defaultValue>
+class Matrix : public Intermediary<T, defaultValue>
 {
 public:
     using row = index_type;
@@ -117,7 +117,10 @@ public:
 //        return iterator(map.end());
 //    }
 
-    Matrix() = default;
+    Matrix()
+    {
+
+    }
 
     T getDefaultValue(){ return defaultValue; }
 

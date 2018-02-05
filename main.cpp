@@ -9,7 +9,9 @@ int main(int argc, char *argv[])
 
 //    assert(matr.size() == 0);
     auto a = matr[0][0];
-    std::cout << a;
+    matr[0][0][9] = 2;
+    matr[0][0][9] = -1;
+    std::cout << matr[0][0][9];
 //    assert(a == -1);
 //    assert(matr.size() == 0);
 //    matr[100][100] = 314;
