@@ -4,145 +4,97 @@
 */
 #pragma once
 #include <memory>
-#include <tuple>
+#include <vector>
+#include <utility>
 #include "Last.h"
 
 template<typename T, T defaultValue>
-class Matrix : public Intermediary<T, defaultValue>
+class Matrix final : public Intermediary<T, defaultValue>
 {
 public:
-    using row = index_type;
-    using column = Intermediary<T, defaultValue>;
-//    using return_type = std::tuple<size_type, size_type, T>;
-//    class iterator
-//    {
-//    public:
-//        using map_iterator = typename std::map<row, column>::iterator;
-//        iterator(map_iterator it)
-//        {
-//            map_it = it;
-//            col_it = map_it->second.begin();
-//        }
+    class iterator
+    {
+    public:
+        using intermediary_iterator = typename Intermediary<T, defaultValue>::intermediary_iterator;
+        using return_type = std::vector<std::pair<std::size_t, T>>;
+        iterator(intermediary_iterator it)
+        {
+            inter_it = it;
+            for(auto it = Intermediary<T, defaultValue>::IntermediaryMap.begin();
+                it != Intermediary<T, defaultValue>::IntermediaryMap.end(); it++)
+                it->second->setBeginForIterator();
+        }
 
-//        iterator(const iterator& it)
-//        {
-//            map_it = it.map_it;
-//        }
+        iterator(const iterator& it)
+        {
+            inter_it = it.inter_it;
+        }
 
-//        ~iterator() = default;
+        ~iterator() = default;
 
-//        bool operator==(const iterator& it) const
-//        {
-//            return map_it == it.map_it;
-//        }
-//        bool operator!=(const iterator& it) const
-//        {
-//            return map_it != it.map_it;
-//        }
+        bool operator==(const iterator& it) const
+        {
+            return inter_it == it.inter_it;
+        }
+        bool operator!=(const iterator& it) const
+        {
+            return inter_it != it.inter_it;
+        }
 
-//        iterator& operator++() noexcept
-//        {
-//            if(col_it != map_it->second.end())
-//                col_it++;
+        iterator& operator++() noexcept
+        {
+            if(inter_it->second->nextIt())
+                inter_it++;
+            return *this;
+        }
 
-//            if(col_it == map_it->second.end())
-//            {
-//                map_it++;
-//                col_it = map_it->second.begin();
-//            }
-//            return *this;
-//        }
+        iterator operator++(int) noexcept
+        {
+            auto tmp = *this;
+            if(inter_it->second->nextIt())
+                inter_it++;
+            return tmp;
+        }
 
-//        iterator operator++(int) noexcept
-//        {
-//            auto tmp = *this;
-//            if(col_it != map_it->second.end())
-//                col_it++;
+        iterator& operator--() noexcept
+        {
+            if(inter_it->second->previousIt())
+                inter_it--;
+            return *this;
+        }
 
-//            if(col_it == map_it->second.end())
-//            {
-//                map_it++;
-//                col_it = map_it->second.begin();
-//            }
-//            return tmp;
-//        }
+        iterator operator--(int) noexcept
+        {
+            auto tmp = *this;
+            if(inter_it->second->previousIt())
+                inter_it--;
+            return tmp;
+        }
 
-//        iterator& operator--() noexcept
-//        {
-//            if(col_it != map_it->second.rbegin())
-//                col_it--;
-
-//            if(col_it == map_it->second.rbegin())
-//            {
-//                map_it--;
-//                col_it = map_it->second.rend();
-//            }
-//            return *this;
-//        }
-
-//        iterator operator--(int) noexcept
-//        {
-//            auto tmp = *this;
-//            if(col_it != map_it->second.rbegin())
-//                col_it--;
-
-//            if(col_it == map_it->second.rbegin())
-//            {
-//                map_it--;
-//                col_it = map_it->second.rend();
-//            }
-//            return tmp;
-//        }
-
-//        return_type operator*() const noexcept
-//        {
-//            return return_type(map_it->first, col_it->first, col_it->second);
-//        }
+        return_type operator*() const noexcept
+        {
+            return_type returnedValue;
+            return returnedValue;
+        }
 //        pointer operator->() const noexcept
 //        {
 //            return &pNode->data;
 //        }
 
-//        map_iterator map_it;
-//        typename column::column_iterator col_it;
-//    };
+        intermediary_iterator inter_it;
+    };
 
-//    iterator begin()
-//    {
-//        return iterator(map.begin());
-//    }
-
-//    iterator end()
-//    {
-//        return iterator(map.end());
-//    }
-
-    Matrix()
+    iterator begin()
     {
-
+        return iterator(Intermediary<T, defaultValue>::IntermediaryMap.begin());
     }
+
+    iterator end()
+    {
+        return iterator(Intermediary<T, defaultValue>::IntermediaryMap.end());
+    }
+
+    Matrix() = default;
 
     T getDefaultValue(){ return defaultValue; }
-
-    index_type size()
-    {
-//        update();
-//        size_type size_ = 0;
-
-//        for(auto& elem : map)
-//        {
-//            size_ += elem.second.size();
-//        }
-//        if(next)
-//            size_ += next->size();
-
-//        return size_;
-    }
-
-    void update()
-    {
-//        col_.update();
-//        savePreviousData();
-//        eraseData();
-    }
 };
