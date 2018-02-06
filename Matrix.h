@@ -6,7 +6,7 @@
 #include <memory>
 #include <vector>
 #include <utility>
-#include "Last.h"
+#include "Intermediary.h"
 
 template<typename T, T defaultValue>
 class Matrix final : public Intermediary<T, defaultValue>
@@ -20,9 +20,9 @@ public:
         iterator(intermediary_iterator it)
         {
             inter_it = it;
-            for(auto it = Intermediary<T, defaultValue>::IntermediaryMap.begin();
-                it != Intermediary<T, defaultValue>::IntermediaryMap.end(); it++)
-                it->second->setBeginForIterator();
+//            for(auto it = Intermediary<T, defaultValue>::IntermediaryMap.begin();
+//                it != Intermediary<T, defaultValue>::IntermediaryMap.end(); it++)
+                inter_it->second->setBeginForIterator();
         }
 
         iterator(const iterator& it)
@@ -45,6 +45,8 @@ public:
         {
             if(inter_it->second->nextIt())
                 inter_it++;
+            if(inter_it != this->end())
+                inter_it->second->setBeginForIterator();
             return *this;
         }
 
@@ -53,23 +55,25 @@ public:
             auto tmp = *this;
             if(inter_it->second->nextIt())
                 inter_it++;
+            if(inter_it != this->end())
+                inter_it->second->setBeginForIterator();
             return tmp;
         }
 
-        iterator& operator--() noexcept
-        {
-            if(inter_it->second->previousIt())
-                inter_it--;
-            return *this;
-        }
+//        iterator& operator--() noexcept
+//        {
+//            if(inter_it->second->previousIt())
+//                inter_it--;
+//            return *this;
+//        }
 
-        iterator operator--(int) noexcept
-        {
-            auto tmp = *this;
-            if(inter_it->second->previousIt())
-                inter_it--;
-            return tmp;
-        }
+//        iterator operator--(int) noexcept
+//        {
+//            auto tmp = *this;
+//            if(inter_it->second->previousIt())
+//                inter_it--;
+//            return tmp;
+//        }
 
         return_type operator*() const noexcept
         {

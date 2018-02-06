@@ -130,6 +130,15 @@ public:
         return false;
     }
 
+    void setBeginForIterator()
+    {
+        IntermediaryMap_iterator = this->begin();
+        for(auto it = IntermediaryMap.begin(); it != IntermediaryMap.end(); it++)
+        {
+            it->second->setBeginForIterator();
+        }
+    }
+
 private:
     Intermediary* previous = nullptr;
     T Value = defaultValue;
@@ -139,12 +148,4 @@ private:
 protected:
     std::map<index_type, std::shared_ptr<Intermediary> > IntermediaryMap;
     Intermediary() = default;
-    void setBeginForIterator()
-    {
-        IntermediaryMap_iterator = this->begin();
-        for(auto it = IntermediaryMap.begin(); it != IntermediaryMap.end(); it++)
-        {
-            it->second->setBeginForIterator();
-        }
-    }
 };
