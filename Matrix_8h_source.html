@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.6"/>
+<title>matrix: Исходный файл Matrix.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">matrix
+   &#160;<span id="projectnumber">0.0.1</span>
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Создано системой Doxygen 1.8.6 -->
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Титульная&#160;страница</span></a></li>
+      <li><a href="annotated.html"><span>Классы</span></a></li>
+      <li class="current"><a href="files.html"><span>Файлы</span></a></li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Файлы</span></a></li>
+      <li><a href="globals.html"><span>Список&#160;членов&#160;всех&#160;файлов</span></a></li>
+    </ul>
+  </div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">Matrix.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<a href="Matrix_8h.html">См. документацию.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="preprocessor">#include &lt;utility&gt;</span></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;tuple&gt;</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span>, <span class="keyword">class</span> T&gt;</div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="Matrix_8h.html#a7ae4d225c5ce106ede44befffa71d697">   12</a></span>&#160;<span class="keyword">using</span> <a class="code" href="Matrix_8h.html#a7ae4d225c5ce106ede44befffa71d697">T_</a> = T;</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno"><a class="line" href="structIndexes.html">   14</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structIndexes.html">Indexes</a></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;{</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, std::<span class="keywordtype">size_t</span> dimension&gt;</div>
+<div class="line"><a name="l00017"></a><span class="lineno"><a class="line" href="structIndexes.html#aad75504012c5b2a0adef8d9917622736">   17</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="structIndexes.html#aad75504012c5b2a0adef8d9917622736">gen</a>()</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    {</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="keywordflow">return</span> Indexes::gen&lt;T&gt;(std::make_index_sequence&lt;dimension&gt;{});</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    }</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, std::size_t... Is&gt;</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="structIndexes.html#a37a1e44aeb54fa7b728182cc10eeed80">   23</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">auto</span> <a class="code" href="structIndexes.html#a37a1e44aeb54fa7b728182cc10eeed80">gen</a>(std::index_sequence&lt;Is...&gt;)</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    {</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordflow">return</span> std::tuple&lt;T_&lt;Is, T&gt;...&gt;{};</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    }</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;};</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, T defaultValue, std::<span class="keywordtype">size_t</span> dimension&gt;</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classMatrix.html">   30</a></span>&#160;<span class="keyword">class </span><a class="code" href="classMatrix.html">Matrix</a>;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> temp_dim, <span class="keyword">typename</span> T, T defaultValue, std::<span class="keywordtype">size_t</span> dimension&gt;</div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="structIntermediary.html">   33</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structIntermediary.html">Intermediary</a>;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, T defaultValue, std::<span class="keywordtype">size_t</span> dimension&gt;</div>
+<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html">   36</a></span>&#160;<span class="keyword">struct </span><a class="code" href="structIntermediary.html">Intermediary</a>&lt;dimension, T, defaultValue, dimension&gt;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
+<div class="line"><a name="l00038"></a><span class="lineno"><a class="line" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#ad3d4d79417782412774c012f5db2227e">   38</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#ad3d4d79417782412774c012f5db2227e">index_type</a> = decltype(Indexes::gen&lt;std::size_t, dimension&gt;());</div>
+<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#a88951726f77c085d6bac18f13606b090">   39</a></span>&#160;    <a class="code" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#a88951726f77c085d6bac18f13606b090">Intermediary</a>(<a class="code" href="classMatrix.html">Matrix&lt;T, defaultValue, dimension&gt;</a>&amp; matr, <a class="code" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#ad3d4d79417782412774c012f5db2227e">index_type</a> curr_index):matr_(matr), current_index(curr_index){}</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#ad11ef16059ffeec384995689065d24d3">   41</a></span>&#160;    <a class="code" href="structIntermediary.html">Intermediary</a>&amp; <a class="code" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#ad11ef16059ffeec384995689065d24d3">operator=</a>(<span class="keyword">const</span> T&amp; value)</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    {</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="keyword">auto</span> pair = matr_.find(current_index);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        <span class="keywordflow">if</span> (value != defaultValue)</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        {</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            <span class="keywordflow">if</span> (pair == matr_.end())</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;                matr_.emplace(current_index, value);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                pair-&gt;second = value;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        }</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (pair != matr_.end())</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            matr_.erase(pair);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    }</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#a928191a294184e9e0deb74185bad39d0">   56</a></span>&#160;    <span class="keywordtype">bool</span> operator ==(<span class="keyword">const</span> T&amp; value)</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        <span class="keyword">auto</span> pair = matr_.find(current_index);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordflow">if</span>(value != defaultValue)</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        {</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <span class="keywordflow">if</span>(pair != matr_.end())</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;            {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;                <span class="keywordflow">return</span> pair-&gt;second == value;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;            }</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        }</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        <span class="keywordflow">else</span> <span class="keywordflow">if</span>(pair != matr_.end())</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        {</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        }</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    }</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00076"></a><span class="lineno"><a class="line" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#a5c8febac2f95a3b6045bd016a9fd6388">   76</a></span>&#160;    <span class="keyword">operator</span> T()<span class="keyword"> const</span></div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="keyword">    </span>{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keyword">auto</span> pair = matr_.find(current_index);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keywordflow">if</span> (pair == matr_.end())</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <span class="keywordflow">return</span> defaultValue;</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keywordflow">return</span> pair-&gt;second;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    }</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="classMatrix.html">Matrix&lt;T, defaultValue, dimension&gt;</a>&amp; matr_;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <a class="code" href="structIntermediary.html#a2ae8bbab3e1a720089dff868b13a522e">index_type</a> current_index;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;};</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="keyword">template</span>&lt;std::<span class="keywordtype">size_t</span> temp_dim, <span class="keyword">typename</span> T, T defaultValue, std::<span class="keywordtype">size_t</span> dimension&gt;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;<span class="keyword">struct </span><a class="code" href="structIntermediary.html">Intermediary</a></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{</div>
+<div class="line"><a name="l00093"></a><span class="lineno"><a class="line" href="structIntermediary.html#a2ae8bbab3e1a720089dff868b13a522e">   93</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="structIntermediary.html#a2ae8bbab3e1a720089dff868b13a522e">index_type</a> = decltype(Indexes::gen&lt;std::size_t, temp_dim&gt;());</div>
+<div class="line"><a name="l00094"></a><span class="lineno"><a class="line" href="structIntermediary.html#a2164838ba274a45c8913a5fce6e521be">   94</a></span>&#160;    <a class="code" href="structIntermediary.html#a2164838ba274a45c8913a5fce6e521be">Intermediary</a>(<a class="code" href="classMatrix.html">Matrix&lt;T, defaultValue, dimension&gt;</a>&amp; matr, <a class="code" href="structIntermediary.html#a2ae8bbab3e1a720089dff868b13a522e">index_type</a> curr_index):matr_(matr), current_index(curr_index){}</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno"><a class="line" href="structIntermediary.html#aeef834b89e0eb6821c0c3ce281fd2af5">   96</a></span>&#160;    <a class="code" href="structIntermediary.html">Intermediary&lt;temp_dim + 1, T, defaultValue, dimension&gt;</a> <a class="code" href="structIntermediary.html#aeef834b89e0eb6821c0c3ce281fd2af5">operator []</a>(std::size_t index)</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    {</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;<span class="comment">//        if(temp_dim + 1 != dimension)</span></div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="structIntermediary.html">Intermediary&lt;temp_dim + 1, T, defaultValue, dimension&gt;</a>(matr_, std::tuple_cat(current_index, std::make_tuple(index)));</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;<span class="comment">//        else</span></div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="comment">//            return Intermediary&lt;dimension, T, defaultValue, dimension&gt;(matr_, std::tuple_cat(current_index, std::make_tuple(index)));</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    }</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="classMatrix.html">Matrix&lt;T, defaultValue, dimension&gt;</a>&amp; matr_;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <a class="code" href="structIntermediary.html#a2ae8bbab3e1a720089dff868b13a522e">index_type</a> current_index;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;};</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, T defaultValue, std::<span class="keywordtype">size_t</span> dimension = 2&gt;</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;<span class="keyword">class </span><a class="code" href="classMatrix.html">Matrix</a> final : <span class="keyword">public</span> std::map&lt;decltype(Indexes::gen&lt;std::size_t, dimension&gt;()), T&gt;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;{</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classMatrix.html#a7e71caac9532821e0f99324737dc162b">  113</a></span>&#160;    <span class="keyword">using</span> <a class="code" href="classMatrix.html#a7e71caac9532821e0f99324737dc162b">index</a> = decltype(Indexes::gen&lt;std::size_t, dimension&gt;());</div>
+<div class="line"><a name="l00114"></a><span class="lineno"><a class="line" href="classMatrix.html#acf722e9670b91a6e8d74708ab40d5cfc">  114</a></span>&#160;    <a class="code" href="structIntermediary.html">Intermediary&lt;1, T, defaultValue, dimension&gt;</a> <a class="code" href="classMatrix.html#acf722e9670b91a6e8d74708ab40d5cfc">operator []</a>(std::size_t <a class="code" href="classMatrix.html#a7e71caac9532821e0f99324737dc162b">index</a>)</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    {</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="structIntermediary.html">Intermediary&lt;1, T, defaultValue, dimension&gt;</a>(*<span class="keyword">this</span>, std::make_tuple(index));</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    }</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="classMatrix.html#a87885fa4eb08cab7e59f2c3acc4372ee">  119</a></span>&#160;    <a class="code" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html">Intermediary&lt;dimension, T, defaultValue, dimension&gt;</a> <a class="code" href="classMatrix.html#acf722e9670b91a6e8d74708ab40d5cfc">operator []</a>(<a class="code" href="classMatrix.html#a7e71caac9532821e0f99324737dc162b">index</a> ind)</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    {</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html">Intermediary&lt;dimension, T, defaultValue, dimension&gt;</a>(*<span class="keyword">this</span>, ind);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;    }</div>
+<div class="line"><a name="l00123"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html">  123</a></span>&#160;    <span class="keyword">class </span><a class="code" href="classMatrix_1_1iterator.html">iterator</a></div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        {</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">  126</a></span>&#160;            <span class="keyword">using</span> <a class="code" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">inner_iterator</a> = <span class="keyword">typename</span> std::map&lt;decltype(Indexes::gen&lt;std::size_t, dimension&gt;()), T&gt;<a class="code" href="classMatrix_1_1iterator.html#ade9912640154422e94e9cbcbb9d4a432">::iterator</a>;</div>
+<div class="line"><a name="l00127"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#ade9912640154422e94e9cbcbb9d4a432">  127</a></span>&#160;            <a class="code" href="classMatrix_1_1iterator.html#ade9912640154422e94e9cbcbb9d4a432">iterator</a>(<a class="code" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">inner_iterator</a> it)</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            {</div>
+<div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;                <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a> = it;</div>
+<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;            }</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;            <a class="code" href="classMatrix_1_1iterator.html#a2a421b4544f181004644ebc07f6d3d9d">~iterator</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00134"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#ada7b200e9fdbcc499ac7c61f09d4c4f7">  134</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classMatrix_1_1iterator.html#ada7b200e9fdbcc499ac7c61f09d4c4f7">operator==</a>(<span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html">iterator</a>&amp; it)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a> == it.<a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;            }</div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
+<div class="line"><a name="l00139"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a2cd9850c41023de9d2468fcada6476cb">  139</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classMatrix_1_1iterator.html#a2cd9850c41023de9d2468fcada6476cb">operator==</a>(<span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">inner_iterator</a> &amp;inner_iterator_)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a> == inner_iterator_;</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;            }</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00144"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a459e9d7060e84f149134aaced45afffe">  144</a></span>&#160;            <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classMatrix_1_1iterator.html#a459e9d7060e84f149134aaced45afffe">operator==</a>(<span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">inner_iterator</a> &amp;inner_iterator_, <span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html">iterator</a>&amp; it)</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;            {</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                <span class="keywordflow">return</span> inner_iterator_ == it.<a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>;</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;            }</div>
+<div class="line"><a name="l00148"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a43d41a4c93187352c66345ce3a164fbb">  148</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classMatrix_1_1iterator.html#a43d41a4c93187352c66345ce3a164fbb">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html">iterator</a>&amp; it)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a> != it.<a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>;</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;            }</div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a773295e53e3a91936e1742616ef9f397">  153</a></span>&#160;            <span class="keywordtype">bool</span> <a class="code" href="classMatrix_1_1iterator.html#a773295e53e3a91936e1742616ef9f397">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">inner_iterator</a> &amp;inner_iterator_)<span class="keyword"> const</span></div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="keyword">            </span>{</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;                <span class="keywordflow">return</span> <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a> != inner_iterator_;</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;            }</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
+<div class="line"><a name="l00158"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#af6eb41ae02dd3536aef9415ccededfa7">  158</a></span>&#160;            <span class="keyword">friend</span> <span class="keywordtype">bool</span> <a class="code" href="classMatrix_1_1iterator.html#af6eb41ae02dd3536aef9415ccededfa7">operator!=</a>(<span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">inner_iterator</a> &amp;inner_iterator_, <span class="keyword">const</span> <a class="code" href="classMatrix_1_1iterator.html">iterator</a>&amp; it)</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;            {</div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;                <span class="keywordflow">return</span> inner_iterator_ != it.<a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>;</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;            }</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;</div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a2a327ac879f009d414020b7b1d45b980">  163</a></span>&#160;            <a class="code" href="classMatrix_1_1iterator.html">iterator</a>&amp; <a class="code" href="classMatrix_1_1iterator.html#a2a327ac879f009d414020b7b1d45b980">operator++</a>() noexcept</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;            {</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>++;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;            }</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;</div>
+<div class="line"><a name="l00169"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a6ea5f315b5b4f0b4d29e468201771ceb">  169</a></span>&#160;            <a class="code" href="classMatrix_1_1iterator.html">iterator</a> <a class="code" href="classMatrix_1_1iterator.html#a6ea5f315b5b4f0b4d29e468201771ceb">operator++</a>(<span class="keywordtype">int</span>) noexcept</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;            {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                <span class="keyword">auto</span> tmp = *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;                <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>++;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                <span class="keywordflow">return</span> tmp;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;            }</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00176"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a47f1492d972442e913d73407f493b5ce">  176</a></span>&#160;            <a class="code" href="classMatrix_1_1iterator.html">iterator</a>&amp; <a class="code" href="classMatrix_1_1iterator.html#a47f1492d972442e913d73407f493b5ce">operator--</a>() noexcept</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;            {</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;                <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>--;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;                <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;            }</div>
+<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;</div>
+<div class="line"><a name="l00182"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#ad74c1fd01b48b243eb169e010571399c">  182</a></span>&#160;            <a class="code" href="classMatrix_1_1iterator.html">iterator</a> <a class="code" href="classMatrix_1_1iterator.html#ad74c1fd01b48b243eb169e010571399c">operator--</a>(<span class="keywordtype">int</span>) noexcept</div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;            {</div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;                <span class="keyword">auto</span> tmp = *<span class="keyword">this</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;                <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>--;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;                <span class="keywordflow">return</span> tmp;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;            }</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a5147bc423336358c807b4983602bd692">  189</a></span>&#160;            <span class="keyword">auto</span> <a class="code" href="classMatrix_1_1iterator.html#a5147bc423336358c807b4983602bd692">operator*</a>() const noexcept</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;            {</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;                <span class="keywordflow">return</span> std::tuple_cat(<a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>-&gt;first, std::make_tuple(<a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>-&gt;second));</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;            }</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
+<div class="line"><a name="l00194"></a><span class="lineno"><a class="line" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">  194</a></span>&#160;            <a class="code" href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">inner_iterator</a> <a class="code" href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">iterator_</a>;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;        };</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;</div>
+<div class="line"><a name="l00197"></a><span class="lineno"><a class="line" href="classMatrix.html#a259031f152bdaecf5a03158053ee6d3c">  197</a></span>&#160;        <a class="code" href="classMatrix_1_1iterator.html">iterator</a> <a class="code" href="classMatrix.html#a259031f152bdaecf5a03158053ee6d3c">begin</a>()</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;        {</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classMatrix_1_1iterator.html">iterator</a>(std::map&lt;decltype(Indexes::gen&lt;std::size_t, dimension&gt;()), T&gt;::<a class="code" href="classMatrix.html#a259031f152bdaecf5a03158053ee6d3c">begin</a>());</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;        }</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;</div>
+<div class="line"><a name="l00202"></a><span class="lineno"><a class="line" href="classMatrix.html#a05569ca1e43f2bfeafc89fb270fc48b0">  202</a></span>&#160;        <a class="code" href="classMatrix_1_1iterator.html">iterator</a> <a class="code" href="classMatrix.html#a05569ca1e43f2bfeafc89fb270fc48b0">end</a>()</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;        {</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;            <span class="keywordflow">return</span> <a class="code" href="classMatrix_1_1iterator.html">iterator</a>(std::map&lt;decltype(Indexes::gen&lt;std::size_t, dimension&gt;()), T&gt;::<a class="code" href="classMatrix.html#a05569ca1e43f2bfeafc89fb270fc48b0">end</a>());</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;        }</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;};</div>
+<div class="ttc" id="structIntermediary_html_aeef834b89e0eb6821c0c3ce281fd2af5"><div class="ttname"><a href="structIntermediary.html#aeef834b89e0eb6821c0c3ce281fd2af5">Intermediary::operator[]</a></div><div class="ttdeci">Intermediary&lt; temp_dim+1, T, defaultValue, dimension &gt; operator[](std::size_t index)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00096">Matrix.h:96</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_ad74c1fd01b48b243eb169e010571399c"><div class="ttname"><a href="classMatrix_1_1iterator.html#ad74c1fd01b48b243eb169e010571399c">Matrix::iterator::operator--</a></div><div class="ttdeci">iterator operator--(int) noexcept</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00182">Matrix.h:182</a></div></div>
+<div class="ttc" id="classMatrix_html_a7e71caac9532821e0f99324737dc162b"><div class="ttname"><a href="classMatrix.html#a7e71caac9532821e0f99324737dc162b">Matrix::index</a></div><div class="ttdeci">decltype(Indexes::gen&lt; std::size_t, dimension &gt;()) index</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00113">Matrix.h:113</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a2a327ac879f009d414020b7b1d45b980"><div class="ttname"><a href="classMatrix_1_1iterator.html#a2a327ac879f009d414020b7b1d45b980">Matrix::iterator::operator++</a></div><div class="ttdeci">iterator &amp; operator++() noexcept</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00163">Matrix.h:163</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_ade9912640154422e94e9cbcbb9d4a432"><div class="ttname"><a href="classMatrix_1_1iterator.html#ade9912640154422e94e9cbcbb9d4a432">Matrix::iterator::iterator</a></div><div class="ttdeci">iterator(inner_iterator it)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00127">Matrix.h:127</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a773295e53e3a91936e1742616ef9f397"><div class="ttname"><a href="classMatrix_1_1iterator.html#a773295e53e3a91936e1742616ef9f397">Matrix::iterator::operator!=</a></div><div class="ttdeci">bool operator!=(const inner_iterator &amp;inner_iterator_) const </div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00153">Matrix.h:153</a></div></div>
+<div class="ttc" id="structIndexes_html"><div class="ttname"><a href="structIndexes.html">Indexes</a></div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00014">Matrix.h:14</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a2cd9850c41023de9d2468fcada6476cb"><div class="ttname"><a href="classMatrix_1_1iterator.html#a2cd9850c41023de9d2468fcada6476cb">Matrix::iterator::operator==</a></div><div class="ttdeci">bool operator==(const inner_iterator &amp;inner_iterator_) const </div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00139">Matrix.h:139</a></div></div>
+<div class="ttc" id="Matrix_8h_html_a7ae4d225c5ce106ede44befffa71d697"><div class="ttname"><a href="Matrix_8h.html#a7ae4d225c5ce106ede44befffa71d697">T_</a></div><div class="ttdeci">T T_</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00012">Matrix.h:12</a></div></div>
+<div class="ttc" id="classMatrix_html_acf722e9670b91a6e8d74708ab40d5cfc"><div class="ttname"><a href="classMatrix.html#acf722e9670b91a6e8d74708ab40d5cfc">Matrix::operator[]</a></div><div class="ttdeci">Intermediary&lt; 1, T, defaultValue, dimension &gt; operator[](std::size_t index)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00114">Matrix.h:114</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a5244e122b7d9876938bc59c6d08ee971"><div class="ttname"><a href="classMatrix_1_1iterator.html#a5244e122b7d9876938bc59c6d08ee971">Matrix::iterator::iterator_</a></div><div class="ttdeci">inner_iterator iterator_</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00194">Matrix.h:194</a></div></div>
+<div class="ttc" id="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4_html"><div class="ttname"><a href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html">Intermediary&lt; dimension, T, defaultValue, dimension &gt;</a></div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00036">Matrix.h:36</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a6ea5f315b5b4f0b4d29e468201771ceb"><div class="ttname"><a href="classMatrix_1_1iterator.html#a6ea5f315b5b4f0b4d29e468201771ceb">Matrix::iterator::operator++</a></div><div class="ttdeci">iterator operator++(int) noexcept</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00169">Matrix.h:169</a></div></div>
+<div class="ttc" id="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4_html_a88951726f77c085d6bac18f13606b090"><div class="ttname"><a href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#a88951726f77c085d6bac18f13606b090">Intermediary&lt; dimension, T, defaultValue, dimension &gt;::Intermediary</a></div><div class="ttdeci">Intermediary(Matrix&lt; T, defaultValue, dimension &gt; &amp;matr, index_type curr_index)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00039">Matrix.h:39</a></div></div>
+<div class="ttc" id="structIntermediary_html_a2164838ba274a45c8913a5fce6e521be"><div class="ttname"><a href="structIntermediary.html#a2164838ba274a45c8913a5fce6e521be">Intermediary::Intermediary</a></div><div class="ttdeci">Intermediary(Matrix&lt; T, defaultValue, dimension &gt; &amp;matr, index_type curr_index)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00094">Matrix.h:94</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a459e9d7060e84f149134aaced45afffe"><div class="ttname"><a href="classMatrix_1_1iterator.html#a459e9d7060e84f149134aaced45afffe">Matrix::iterator::operator==</a></div><div class="ttdeci">friend bool operator==(const inner_iterator &amp;inner_iterator_, const iterator &amp;it)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00144">Matrix.h:144</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a55a0e519f7926c97f22bcb2a44fd0a97"><div class="ttname"><a href="classMatrix_1_1iterator.html#a55a0e519f7926c97f22bcb2a44fd0a97">Matrix::iterator::inner_iterator</a></div><div class="ttdeci">typename std::map&lt; decltype(Indexes::gen&lt; std::size_t, dimension &gt;()), T &gt;::iterator inner_iterator</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00126">Matrix.h:126</a></div></div>
+<div class="ttc" id="classMatrix_html"><div class="ttname"><a href="classMatrix.html">Matrix</a></div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00030">Matrix.h:30</a></div></div>
+<div class="ttc" id="structIndexes_html_aad75504012c5b2a0adef8d9917622736"><div class="ttname"><a href="structIndexes.html#aad75504012c5b2a0adef8d9917622736">Indexes::gen</a></div><div class="ttdeci">static auto gen()</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00017">Matrix.h:17</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a43d41a4c93187352c66345ce3a164fbb"><div class="ttname"><a href="classMatrix_1_1iterator.html#a43d41a4c93187352c66345ce3a164fbb">Matrix::iterator::operator!=</a></div><div class="ttdeci">bool operator!=(const iterator &amp;it) const </div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00148">Matrix.h:148</a></div></div>
+<div class="ttc" id="classMatrix_html_a259031f152bdaecf5a03158053ee6d3c"><div class="ttname"><a href="classMatrix.html#a259031f152bdaecf5a03158053ee6d3c">Matrix::begin</a></div><div class="ttdeci">iterator begin()</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00197">Matrix.h:197</a></div></div>
+<div class="ttc" id="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4_html_ad11ef16059ffeec384995689065d24d3"><div class="ttname"><a href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#ad11ef16059ffeec384995689065d24d3">Intermediary&lt; dimension, T, defaultValue, dimension &gt;::operator=</a></div><div class="ttdeci">Intermediary &amp; operator=(const T &amp;value)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00041">Matrix.h:41</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_af6eb41ae02dd3536aef9415ccededfa7"><div class="ttname"><a href="classMatrix_1_1iterator.html#af6eb41ae02dd3536aef9415ccededfa7">Matrix::iterator::operator!=</a></div><div class="ttdeci">friend bool operator!=(const inner_iterator &amp;inner_iterator_, const iterator &amp;it)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00158">Matrix.h:158</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html"><div class="ttname"><a href="classMatrix_1_1iterator.html">Matrix::iterator</a></div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00123">Matrix.h:123</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_ada7b200e9fdbcc499ac7c61f09d4c4f7"><div class="ttname"><a href="classMatrix_1_1iterator.html#ada7b200e9fdbcc499ac7c61f09d4c4f7">Matrix::iterator::operator==</a></div><div class="ttdeci">bool operator==(const iterator &amp;it) const </div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00134">Matrix.h:134</a></div></div>
+<div class="ttc" id="structIntermediary_html_a2ae8bbab3e1a720089dff868b13a522e"><div class="ttname"><a href="structIntermediary.html#a2ae8bbab3e1a720089dff868b13a522e">Intermediary::index_type</a></div><div class="ttdeci">decltype(Indexes::gen&lt; std::size_t, temp_dim &gt;()) index_type</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00093">Matrix.h:93</a></div></div>
+<div class="ttc" id="structIndexes_html_a37a1e44aeb54fa7b728182cc10eeed80"><div class="ttname"><a href="structIndexes.html#a37a1e44aeb54fa7b728182cc10eeed80">Indexes::gen</a></div><div class="ttdeci">static auto gen(std::index_sequence&lt; Is...&gt;)</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00023">Matrix.h:23</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a5147bc423336358c807b4983602bd692"><div class="ttname"><a href="classMatrix_1_1iterator.html#a5147bc423336358c807b4983602bd692">Matrix::iterator::operator*</a></div><div class="ttdeci">auto operator*() const noexcept</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00189">Matrix.h:189</a></div></div>
+<div class="ttc" id="classMatrix_html_a05569ca1e43f2bfeafc89fb270fc48b0"><div class="ttname"><a href="classMatrix.html#a05569ca1e43f2bfeafc89fb270fc48b0">Matrix::end</a></div><div class="ttdeci">iterator end()</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00202">Matrix.h:202</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a2a421b4544f181004644ebc07f6d3d9d"><div class="ttname"><a href="classMatrix_1_1iterator.html#a2a421b4544f181004644ebc07f6d3d9d">Matrix::iterator::~iterator</a></div><div class="ttdeci">~iterator()=default</div></div>
+<div class="ttc" id="structIntermediary_html"><div class="ttname"><a href="structIntermediary.html">Intermediary</a></div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00033">Matrix.h:33</a></div></div>
+<div class="ttc" id="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4_html_ad3d4d79417782412774c012f5db2227e"><div class="ttname"><a href="structIntermediary_3_01dimension_00_01T_00_01defaultValue_00_01dimension_01_4.html#ad3d4d79417782412774c012f5db2227e">Intermediary&lt; dimension, T, defaultValue, dimension &gt;::index_type</a></div><div class="ttdeci">decltype(Indexes::gen&lt; std::size_t, dimension &gt;()) index_type</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00038">Matrix.h:38</a></div></div>
+<div class="ttc" id="classMatrix_1_1iterator_html_a47f1492d972442e913d73407f493b5ce"><div class="ttname"><a href="classMatrix_1_1iterator.html#a47f1492d972442e913d73407f493b5ce">Matrix::iterator::operator--</a></div><div class="ttdeci">iterator &amp; operator--() noexcept</div><div class="ttdef"><b>Definition:</b> <a href="Matrix_8h_source.html#l00176">Matrix.h:176</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Документация по matrix. Последние изменения: Вс 11 Фев 2018 16:39:48. Создано системой &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.6
+</small></address>
+</body>
+</html>
