@@ -8,15 +8,6 @@ int main(int argc, char *argv[])
 {
     Matrix<int, 0> matr;
 
-//    assert(matr.size() == 0); //
-
-//    auto a = matr[0][0];
-//    assert(a == -1);
-//    assert(matr.size() == 0);
-//    matr[100][100] = 314;
-//    assert(matr[100][100] == 314);
-//    assert(matr.size() == 1);
-
     for(std::size_t i = 0; i < 10; i++)
     {
         matr[i][i] = i;
@@ -35,7 +26,7 @@ int main(int argc, char *argv[])
 
     for(auto tuple: matr)
     {
-        std::cout << tuple;
+        std::cout << tuple << "\n";
     }
 
     return 0;

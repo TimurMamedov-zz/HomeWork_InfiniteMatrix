@@ -1,6 +1,6 @@
 /*!
 \file
-\brief структуры для вывода std::tuple в стандартный поток вывода
+\brief функции для вывода std::tuple в стандартный поток вывода
 */
 #include <tuple>
 
@@ -19,7 +19,7 @@ struct tuple_printer<Type, N, N>
 {
     static void print(std::ostream& out, const Type& value)
     {
-        out << std::get<N>(value) << "\n";
+        out << std::get<N>(value);
     }
 
 };

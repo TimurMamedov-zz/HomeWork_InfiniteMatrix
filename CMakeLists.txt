@@ -1,8 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 
-#project(InfiniteMatrix VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
-project(InfiniteMatrix)
-
+#project(matrix VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+project(matrix)
 #SET (BOOST_ROOT "C:/boost/build-boost")
 #SET (BOOST_INCLUDEDIR "C:/boost/include")
 #SET (BOOST_LIBRARYDIR "C:/boost/lib")
@@ -14,34 +13,23 @@ set(HEADERS Matrix.h tuple_print.h)
 
 add_executable(InfiniteMatrix ${HEADERS} main.cpp)
 
-#set (TEST test_InfiniteMatrix)
-#add_executable (${TEST} test_InfiniteMatrix.cpp)
+set (TEST test_InfiniteMatrix)
+add_executable (${TEST} test_InfiniteMatrix.cpp)
 
-set_target_properties (InfiniteMatrix PROPERTIES
+set_target_properties (InfiniteMatrix ${TEST} PROPERTIES
         CXX_STANDARD 14
         CXX_STANDARD_REQUIRED ON
         COMPILE_OPTIONS -Wpedantic -Wall -Wextra
 )
 
-#target_link_libraries(InfiniteMatrix
-#        gmp
-#        gmpxx
-#)
+set_target_properties (${TEST} PROPERTIES
+        COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
+        INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
+)
 
-#set_target_properties (InfiniteMatrix ${TEST} PROPERTIES
-#        CXX_STANDARD 14
-#        CXX_STANDARD_REQUIRED ON
-#        COMPILE_OPTIONS -Wpedantic -Wall -Wextra
-#)
-
-#set_target_properties (${TEST} PROPERTIES
-#        COMPILE_DEFINITIONS BOOST_TEST_DYN_LINK
-#        INCLUDE_DIRECTORIES ${Boost_INCLUDE_DIR}
-#)
-
-#target_link_libraries(${TEST}
-#        ${Boost_LIBRARIES}
-#)
+target_link_libraries(${TEST}
+        ${Boost_LIBRARIES}
+)
 
 install(TARGETS InfiniteMatrix RUNTIME DESTINATION bin)
 
@@ -55,6 +43,6 @@ set(CPACK_PACKAGE_CONTACT tima_mamedxp@mail.ru)
 
 include(CPack)
 
-#enable_testing()
+enable_testing()
 
-#add_test (${TEST} ${TEST})
+add_test (${TEST} ${TEST})
