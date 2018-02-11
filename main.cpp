@@ -2,32 +2,40 @@
 #include <string>
 #include <assert.h>
 #include "Matrix.h"
+#include "tuple_print.h"
 
 int main(int argc, char *argv[])
 {
-    Matrix<int, -1> matr;
+    Matrix<int, 0> matr;
 
-    assert(matr.size() == 0);
-    auto a = matr[0][0];
-    assert(a == -1);
-    assert(matr.size() == 0);
-    matr[100][100] = 314;
-    assert(matr[100][100] == 314);
-    assert(matr.size() == 1);
-    matr[10][100][5] = 14;
-    matr[100][10][0][0] = 34;
-    matr[10][10] = 4;
-    matr[10][100][5] = -1;
-    assert(matr.size() == 3);
+//    assert(matr.size() == 0); //
 
+//    auto a = matr[0][0];
+//    assert(a == -1);
+//    assert(matr.size() == 0);
+//    matr[100][100] = 314;
+//    assert(matr[100][100] == 314);
+//    assert(matr.size() == 1);
 
-    for(auto c : matr)
+    for(std::size_t i = 0; i < 10; i++)
     {
-//        int x;
-//        int y;
-//        int v;
-//        std::tie(x, y, v) = c;
-//        std::cout << x << y << v << std::endl;
+        matr[i][i] = i;
+        matr[9 - i][i] = i;
+    }
+    for(std::size_t i = 1; i < 9; i++)
+    {
+        for(std::size_t j = 1; j < 9; j++)
+        {
+            std::cout << matr[i][j] << " ";
+        }
+        std::cout << "\n";
+    }
+
+    std::cout << matr.size() << std::endl;
+
+    for(auto tuple: matr)
+    {
+        std::cout << tuple;
     }
 
     return 0;

@@ -4,101 +4,203 @@
 */
 #pragma once
 #include <memory>
-#include <vector>
 #include <utility>
-#include "Intermediary.h"
+#include <map>
+#include <tuple>
 
-template<typename T, T defaultValue>
-class Matrix final : public Intermediary<T, defaultValue>
+template<std::size_t, class T>
+using T_ = T;
+
+struct Indexes
+{
+    template<typename T, std::size_t dimension>
+    static auto gen()
+    {
+        return Indexes::gen<T>(std::make_index_sequence<dimension>{});
+    }
+
+    template<typename T, std::size_t... Is>
+    static auto gen(std::index_sequence<Is...>)
+    {
+        return std::tuple<T_<Is, T>...>{};
+    }
+};
+
+template<typename T, T defaultValue, std::size_t dimension>
+class Matrix;
+
+template<std::size_t temp_dim, typename T, T defaultValue, std::size_t dimension>
+struct Intermediary;
+
+template<typename T, T defaultValue, std::size_t dimension>
+struct Intermediary<dimension, T, defaultValue, dimension>
+{
+    using index_type = decltype(Indexes::gen<std::size_t, dimension>());
+    Intermediary(Matrix<T, defaultValue, dimension>& matr, index_type curr_index):matr_(matr), current_index(curr_index){}
+
+    Intermediary& operator=(const T& value)
+    {
+        auto pair = matr_.find(current_index);
+        if (value != defaultValue)
+        {
+            if (pair == matr_.end())
+                matr_.emplace(current_index, value);
+            else
+                pair->second = value;
+        }
+        else if (pair != matr_.end())
+            matr_.erase(pair);
+        return *this;
+    }
+
+    bool operator ==(const T& value)
+    {
+        auto pair = matr_.find(current_index);
+        if(value != defaultValue)
+        {
+            if(pair != matr_.end())
+            {
+                return pair->second == value;
+            }
+            else
+                return false;
+        }
+        else if(pair != matr_.end())
+        {
+            return false;
+        }
+        else
+            return true;
+    }
+
+    operator T() const
+    {
+        auto pair = matr_.find(current_index);
+        if (pair == matr_.end())
+            return defaultValue;
+        else
+            return pair->second;
+    }
+
+private:
+    Matrix<T, defaultValue, dimension>& matr_;
+    index_type current_index;
+};
+
+template<std::size_t temp_dim, typename T, T defaultValue, std::size_t dimension>
+struct Intermediary
+{
+    using index_type = decltype(Indexes::gen<std::size_t, temp_dim>());
+    Intermediary(Matrix<T, defaultValue, dimension>& matr, index_type curr_index):matr_(matr), current_index(curr_index){}
+
+    Intermediary<temp_dim + 1, T, defaultValue, dimension> operator [](std::size_t index)
+    {
+//        if(temp_dim + 1 != dimension)
+        return Intermediary<temp_dim + 1, T, defaultValue, dimension>(matr_, std::tuple_cat(current_index, std::make_tuple(index)));
+//        else
+//            return Intermediary<dimension, T, defaultValue, dimension>(matr_, std::tuple_cat(current_index, std::make_tuple(index)));
+    }
+
+private:
+    Matrix<T, defaultValue, dimension>& matr_;
+    index_type current_index;
+};
+
+template<typename T, T defaultValue, std::size_t dimension = 2>
+class Matrix final : public std::map<decltype(Indexes::gen<std::size_t, dimension>()), T>
 {
 public:
+    using index = decltype(Indexes::gen<std::size_t, dimension>());
+    Intermediary<1, T, defaultValue, dimension> operator [](std::size_t index)
+    {
+        return Intermediary<1, T, defaultValue, dimension>(*this, std::make_tuple(index));
+    }
+
+    Intermediary<dimension, T, defaultValue, dimension> operator [](index ind)
+    {
+        return Intermediary<dimension, T, defaultValue, dimension>(*this, ind);
+    }
     class iterator
-    {
-    public:
-        using intermediary_iterator = typename Intermediary<T, defaultValue>::intermediary_iterator;
-        using return_type = std::vector<std::pair<std::size_t, T>>;
-        iterator(intermediary_iterator it)
         {
-            inter_it = it;
-//            for(auto it = Intermediary<T, defaultValue>::IntermediaryMap.begin();
-//                it != Intermediary<T, defaultValue>::IntermediaryMap.end(); it++)
-                inter_it->second->setBeginForIterator();
+        public:
+            using inner_iterator = typename std::map<decltype(Indexes::gen<std::size_t, dimension>()), T>::iterator;
+            iterator(inner_iterator it)
+            {
+                iterator_ = it;
+            }
+
+            ~iterator() = default;
+
+            bool operator==(const iterator& it) const
+            {
+                return iterator_ == it.iterator_;
+            }
+
+            bool operator==(const inner_iterator &inner_iterator_) const
+            {
+                return iterator_ == inner_iterator_;
+            }
+
+            friend bool operator==(const inner_iterator &inner_iterator_, const iterator& it)
+            {
+                return inner_iterator_ == it.iterator_;
+            }
+            bool operator!=(const iterator& it) const
+            {
+                return iterator_ != it.iterator_;
+            }
+
+            bool operator!=(const inner_iterator &inner_iterator_) const
+            {
+                return iterator_ != inner_iterator_;
+            }
+
+            friend bool operator!=(const inner_iterator &inner_iterator_, const iterator& it)
+            {
+                return inner_iterator_ != it.iterator_;
+            }
+
+            iterator& operator++() noexcept
+            {
+                iterator_++;
+                return *this;
+            }
+
+            iterator operator++(int) noexcept
+            {
+                auto tmp = *this;
+                iterator_++;
+                return tmp;
+            }
+
+            iterator& operator--() noexcept
+            {
+                iterator_--;
+                return *this;
+            }
+
+            iterator operator--(int) noexcept
+            {
+                auto tmp = *this;
+                iterator_--;
+                return tmp;
+            }
+
+            auto operator*() const noexcept
+            {
+                return std::tuple_cat(iterator_->first, std::make_tuple(iterator_->second));
+            }
+
+            inner_iterator iterator_;
+        };
+
+        iterator begin()
+        {
+            return iterator(std::map<decltype(Indexes::gen<std::size_t, dimension>()), T>::begin());
         }
 
-        iterator(const iterator& it)
+        iterator end()
         {
-            inter_it = it.inter_it;
+            return iterator(std::map<decltype(Indexes::gen<std::size_t, dimension>()), T>::end());
         }
-
-        ~iterator() = default;
-
-        bool operator==(const iterator& it) const
-        {
-            return inter_it == it.inter_it;
-        }
-        bool operator!=(const iterator& it) const
-        {
-            return inter_it != it.inter_it;
-        }
-
-        iterator& operator++() noexcept
-        {
-            if(inter_it->second->nextIt())
-                inter_it++;
-            if(inter_it != this->end())
-                inter_it->second->setBeginForIterator();
-            return *this;
-        }
-
-        iterator operator++(int) noexcept
-        {
-            auto tmp = *this;
-            if(inter_it->second->nextIt())
-                inter_it++;
-            if(inter_it != this->end())
-                inter_it->second->setBeginForIterator();
-            return tmp;
-        }
-
-//        iterator& operator--() noexcept
-//        {
-//            if(inter_it->second->previousIt())
-//                inter_it--;
-//            return *this;
-//        }
-
-//        iterator operator--(int) noexcept
-//        {
-//            auto tmp = *this;
-//            if(inter_it->second->previousIt())
-//                inter_it--;
-//            return tmp;
-//        }
-
-        return_type operator*() const noexcept
-        {
-            return_type returnedValue;
-            return returnedValue;
-        }
-//        pointer operator->() const noexcept
-//        {
-//            return &pNode->data;
-//        }
-
-        intermediary_iterator inter_it;
-    };
-
-    iterator begin()
-    {
-        return iterator(Intermediary<T, defaultValue>::IntermediaryMap.begin());
-    }
-
-    iterator end()
-    {
-        return iterator(Intermediary<T, defaultValue>::IntermediaryMap.end());
-    }
-
-    Matrix() = default;
-
-    T getDefaultValue(){ return defaultValue; }
 };
